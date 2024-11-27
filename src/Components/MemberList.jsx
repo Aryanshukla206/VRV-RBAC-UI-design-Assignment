@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Edit2, Check, AlertCircle } from 'lucide-react';
+import React from 'react';
+import { X, Edit2 } from 'lucide-react';
 
 export default function MemberList({
   members,
@@ -7,9 +7,6 @@ export default function MemberList({
   onUpdateRole,
   onUpdatePermissions,
 }) {
-  const [editingPermissions, setEditingPermissions] = useState(null);
-  const [permissions, setPermissions] = useState([]);
-  const [error, setError] = useState('');
 
   const getRoleBadgeStyles = (role) => {
     const styles = {
@@ -18,29 +15,6 @@ export default function MemberList({
       member: 'bg-green-50 text-green-700 ring-1 ring-green-700/10',
     };
     return `role-badge ${styles[role]}`;
-  };
-
-  const togglePermission = (permission) => {
-    setPermissions((prev) =>
-      prev.includes(permission)
-        ? prev.filter((perm) => perm !== permission)
-        : [...prev, permission]
-    );
-  };
-
-  const savePermissions = (memberId) => {
-    if (!permissions.length) {
-      setError('At least one permission is required');
-      return;
-    }
-    onUpdatePermissions(memberId, permissions);
-    setEditingPermissions(null);
-    setError('');
-  };
-
-  const handleEditPermissions = (member) => {
-    setEditingPermissions(member.id);
-    setPermissions(member.permissions || []);
   };
 
   if (members.length === 0) {
@@ -73,9 +47,9 @@ export default function MemberList({
                     backgroundSize: '1.5em 1.5em'
                   }}
                 >
-                  <option value="member">Member</option>
                   <option value="admin">Admin</option>
-                  <option value="owner">Owner</option>
+                  <option value="manager">Manager</option>
+                  <option value="support">Support</option>
                 </select>
                 <Edit2 className="h-3.5 w-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>

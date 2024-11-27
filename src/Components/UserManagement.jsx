@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
-import { Users } from 'lucide-react';
 import MemberList from './MemberList.jsx';
 import MemberForm from './MemberForm.jsx';
 import Stats from './Stats.jsx';
 import { sampleData } from '../data/sampleData.jsx';
+import { Users } from 'lucide-react';
 
 function UserManagement({user}) {
   const [members, setMembers] = useState(sampleData);

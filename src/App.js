@@ -1,47 +1,73 @@
-import logo from './logo.svg';
 import './App.css';
-import UserManagement from './Components/UserManagement';
-import { useEffect, useState } from 'react';
-import { LogIn } from 'lucide-react';
+import UserManagement from '../src/Components/UserManagement'
+import { useState, useEffect } from 'react';
 import { MyLogin } from './Components/Login';
-import { TicketsPage } from './Components/TicketsPage';
-import { Analatyics } from './Components/Analatyics';
+import ConditionalAccess from './ConditionalAccess';
+import TicketsPage from './Components/TicketsPage';
+import AnalyticsPage from './Components/AnalyticsPage';
+
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Set default state for login
-  const [state, setState] = useState(false); 
-  const [user, setUserName] = useState({email:"sdfsfd", role:"admin"}); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [component, setComponent] = useState();
+  
+  const [user, setuserName] = useState(null); // Initialize as null
+  const [currentComponent, setCurrentComponent] = useState(null); // Track the currently displayed component
+  const accessList = [
+    { text: "Users", component: <UserManagement />, role: ["admin"] },
+    { text: "Analytics", component: <ConditionalAccess user={user} page="analytics" />, role: ["admin", "manager"] },
+    { text: "Tickets", component: <ConditionalAccess user={user} page="tickets" />, role: ["admin", "support", "manager"] },
+  ];
+  const getComponentByRole = (role) => {
+    switch (role) {
+      case 'admin':
+        return <UserManagement />;
+      case 'support':
+        return <TicketsPage />;
+      case 'manager':
+        return <AnalyticsPage />;
+      default:
+        return null; // Or a default component if needed
+    }
+  };
 
-  const accessList =[
-  {  text: "user management",component: <UserManagement/> , role: ["admin"]},
-    {text: "Analytics",component: <Analatyics/> , role: ["admin","manager"]},
-   { text: "Tickets",component: <TicketsPage/> , role: ["admin","support","manager"]},
-  ]
+  const handleComponentClick = (component) => {
+    setCurrentComponent(component);
+  };
+    useEffect(() => {
+    // console.log(user);
+    // Set the initial component based on the user's role
+    if (user) {
+      setCurrentComponent(getComponentByRole(user.role));
+    }
+  }, [user]);
 
-  useEffect(()=>{
-    console.log(user)
-},[user])
-
-
-  return isLoggedIn ? (
-    <div className=' flex  '>
-      <div className=' w-72 h-screen  bg-blue-200 flex flex-col gap-3'>
-     {accessList.filter((access)=> access.role.includes(user.role) ).map(comp=>(
-      <button onClick={(e)=> setState(comp.component)}>{comp.text}</button>
-))}
-
-
-      </div>
-      <div className=' flex-grow '>
-    {state}
-      </div>
-
+  return (
+    <div className="flex flex-col h-screen"> {/* Use flex-col for vertical layout */}
+      {!isLoggedIn ? (
+        <MyLogin user={user} setuser={setuserName} setIsLoggedIn={setIsLoggedIn} />
+      ) : (
+        <>
+          <nav className="bg-blue-500 p-4"> {/* Top Navigation Bar */}
+            <ul className="flex space-x-4">
+              {accessList
+                .filter((access) => access.role.includes(user.role))
+                .map((access) => (
+                  <li key={access.text}>
+                    <button onClick={() => handleComponentClick(access.component)}>
+                      {access.text}
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </nav>
+          <div className="flex-grow p-4 overflow-auto"> {/* Main Content Area */}
+            {currentComponent}
+          </div>
+        </>
+      )}
     </div>
-  ): <MyLogin user={user} setUser={setUserName} setIsLoggedIn={setIsLoggedIn}/>
-
-  
-  
+  );
 }
 
 export default App;
