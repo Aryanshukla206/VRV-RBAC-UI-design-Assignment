@@ -5,12 +5,11 @@ This project implements a Role-Based Access Control (RBAC) system for a simplifi
 
 ## Project Overview
 
-This application simulates a secure administrative interface.  Users log in with pre-defined credentials (see `MyLogin.js` for details). Based on their role (admin, manager, support, or member), they are granted access to different sections of the dashboard.
+This application simulates a secure administrative interface.  Users log in with pre-defined credentials (see `MyLogin.js` for details). Based on their role (admin, manager, support), they are granted access to different sections of the dashboard.
 
 * **Admin:** Can access user management.
 * **Manager:** Can access analytics.
 * **Support:** Can access tickets.
-* **Member:** Has no special access.
 
 ---
 # Getting Started with Create React App
