@@ -1,38 +1,39 @@
-.App {
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-indigo-50 to-blue-50;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@layer components {
+  .input-field {
+    @apply w-full rounded-lg border-gray-200 bg-white px-4 py-2.5 text-sm transition-all
+    focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20;
+  }
+  
+  .role-badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-all;
+  }
+  
+  .member-card {
+    @apply relative overflow-hidden rounded-lg bg-white p-4 transition-all hover:shadow-lg;
+  }
 }
 
-.App-link {
-  color: #61dafb;
+.slide-up {
+  animation: slideUp 0.3s ease-out;
 }
 
-@keyframes App-logo-spin {
+@keyframes slideUp {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
