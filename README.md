@@ -1,3 +1,18 @@
+
+# VRV Security RBAC Frontend Project
+
+This project implements a Role-Based Access Control (RBAC) system for a simplified administrative dashboard.  It demonstrates user authentication, role-based authorization, and conditional component rendering.
+
+## Project Overview
+
+This application simulates a secure administrative interface.  Users log in with pre-defined credentials (see `MyLogin.js` for details). Based on their role (admin, manager, support, or member), they are granted access to different sections of the dashboard.
+
+* **Admin:** Can access user management.
+* **Manager:** Can access analytics.
+* **Support:** Can access tickets.
+* **Member:** Has no special access.
+
+---
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
