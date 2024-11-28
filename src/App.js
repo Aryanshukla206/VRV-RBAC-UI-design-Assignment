@@ -48,7 +48,8 @@ function App() {
         <MyLogin user={user} setuser={setuserName} setIsLoggedIn={setIsLoggedIn} />
       ) : (
         <>
-          <nav className="bg-blue-500 p-4"> {/* Top Navigation Bar */}
+       
+          <nav className="bg-blue-500 p-4 text-white bg-indigo-600 hover:bg-indigo-700"> {/* Top Navigation Bar */}
             <ul className="flex space-x-4">
               {accessList
                 .filter((access) => access.role.includes(user.role))
